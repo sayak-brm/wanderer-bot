@@ -49,25 +49,3 @@ class I2CIO:
         self.add_write(data)
         self.broadcast()
         self.buffer = []
-
-
-if __name__ == "__main__":
-    addr = 0x01
-    i2c = I2CIO(addr)
-    while(True):
-        commands = input("O> ")
-        commands = commands.split()
-        buf = []
-        for command in commands:
-            if command[0] == 'w':
-                buf.append(int(command[1:]))
-            if command[0] == 'r':
-                i2c.add_read(int(command[1:]))
-            if command[0] == 's':
-                if len(buf)>0:
-                    i2c.add_write(buf)
-                if i2c.broadcast():
-                    reads = i2c.get_reads()
-                    if len(reads)>0:
-                        print("I>", *[msg for msg in reads])
-                else: print("#> Bus Error.")
