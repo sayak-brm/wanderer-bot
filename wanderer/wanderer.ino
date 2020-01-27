@@ -88,14 +88,6 @@ void STOP() {
 
 // callback for received data
 void receiveData(int n){
-  /*
-   * LOW          0x0
-   * HIGH         0x1
-   * ----------------
-   * INPUT        0x0
-   * OUTPUT       0x1
-   * INPUT_PULLUP 0x2
-  */
   Serial.print("Recv. bytes:");
   Serial.println(n);
   
@@ -110,6 +102,11 @@ void receiveData(int n){
       break;
 
     case 1: //pinMode
+      /*
+       * INPUT        0x0
+       * OUTPUT       0x1
+       * INPUT_PULLUP 0x2
+       */
       Serial.println("Recv. pinMode");
       Serial.print("Pin: ");
       Serial.println((int) command[1]);
@@ -131,6 +128,10 @@ void receiveData(int n){
       break;
 
     case 2: //digitalWrite
+      /*
+       * LOW          0x0
+       * HIGH         0x1
+       */
       Serial.println("Recv. digitalWrite");
       Serial.print("Pin: ");
       Serial.println((int) command[1]);
