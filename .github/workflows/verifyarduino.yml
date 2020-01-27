@@ -8,5 +8,5 @@ jobs:
     - name: Build all sketches
       uses: Legion2/arduino-builder-action@v2.0.0
       with:
-        board: "arduino:avr:mega"
+        board: "arduino:avr:mega:cpu=atmega2560"
         sketchDirectory: "wanderer"
