@@ -1,5 +1,5 @@
 #include <NewPing.h>
-#include <Wire.h> #$$
+#include <Wire.h>
 
 #define US_MAX_DISTANCE 255
 NewPing sonar1(5,  6,  US_MAX_DISTANCE);
