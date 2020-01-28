@@ -15,4 +15,3 @@ jobs:
       with:
         board: "arduino:avr:mega:cpu=atmega2560"
         sketchDirectory: "wanderer"
-        libraries: "wanderer/libraries"
