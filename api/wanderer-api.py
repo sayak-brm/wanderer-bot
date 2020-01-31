@@ -1,7 +1,7 @@
 #! /usr/bin/python3
-
 from flask import Flask
-from flask_restful import Resource, Api
+from flask_restful import Api
+from flask_restful import Resource
 from i2cio import I2CIO
 
 app = Flask(__name__)
