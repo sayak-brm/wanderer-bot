@@ -9,24 +9,21 @@ api = Api(app)
 i2c = I2CIO(0x01)
 app.config["DEBUG"] = True
 
-relay_pins = {
-    "DRL": 37,
-    "DIP": 39
-}
+relay_pins = {"DRL": 37, "DIP": 39}
 
 
 class Drive(Resource):
     def post(self, direction):
         if direction == "front":
-            i2c.send_write([6,  1])
+            i2c.send_write([6, 1])
         elif direction == "back":
-            i2c.send_write([6,  2])
+            i2c.send_write([6, 2])
         elif direction == "left":
-            i2c.send_write([6,  3])
+            i2c.send_write([6, 3])
         elif direction == "right":
-            i2c.send_write([6,  4])
+            i2c.send_write([6, 4])
         elif direction == "stop":
-            i2c.send_write([6,  5])
+            i2c.send_write([6, 5])
         else:
             print("ERR: Incorrect Drive Direction")
             return {"success": False}
@@ -64,23 +61,23 @@ class Lights(Resource):
 
 class Gear(Resource):
     def post(self, number):
-        if number == '1':
-            i2c.send_write([7,  63])
-        elif number == '2':
+        if number == "1":
+            i2c.send_write([7, 63])
+        elif number == "2":
             i2c.send_write([7, 127])
-        elif number == '3':
+        elif number == "3":
             i2c.send_write([7, 191])
-        elif number == '4':
+        elif number == "4":
             i2c.send_write([7, 255])
         else:
             return {"success": False}
         return {"success": True}
 
 
-api.add_resource(Drive, '/api/drive/<direction>')
-api.add_resource(Sonar, '/api/sonar/all')
-api.add_resource(Lights, '/api/lights/<light>/<state>')
-api.add_resource(Gear, '/api/gear/<number>')
+api.add_resource(Drive, "/api/drive/<direction>")
+api.add_resource(Sonar, "/api/sonar/all")
+api.add_resource(Lights, "/api/lights/<light>/<state>")
+api.add_resource(Gear, "/api/gear/<number>")
 
 if __name__ == "__main__":
-    app.run(port='8500', host='0.0.0.0')
+    app.run(port="8500", host="0.0.0.0")

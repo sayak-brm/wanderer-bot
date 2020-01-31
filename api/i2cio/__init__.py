@@ -15,29 +15,27 @@ class I2CIO:
         self.buffer = []
 
     def add_write(self, data):
-        self.buffer.append(('w',
-                            smbus2.i2c_msg.write(self.addr, data)))
+        self.buffer.append(("w", smbus2.i2c_msg.write(self.addr, data)))
 
     def add_read(self, len):
-        self.buffer.append(('r',
-                            smbus2.i2c_msg.read(self.addr, len)))
+        self.buffer.append(("r", smbus2.i2c_msg.read(self.addr, len)))
 
     def broadcast(self, attempt=1, max_attempts=3):
         try:
             self.bus.i2c_rdwr(*[msg[1] for msg in self.buffer])
         except OSError:
             print("#> Bus Error... Restarting bus.")
-            print("#> Attempt: ", attempt, "/", max_attempts, sep='')
+            print("#> Attempt: ", attempt, "/", max_attempts, sep="")
             self.bus = smbus2.SMBus(self.bus_no)
-            if(attempt >= max_attempts):
+            if attempt >= max_attempts:
                 raise I2CError
             else:
-                self.broadcast(attempt+1, max_attempts)
+                self.broadcast(attempt + 1, max_attempts)
 
     def get_reads(self):
         reads = []
         for msg in self.buffer:
-            if msg[0] == 'r':
+            if msg[0] == "r":
                 reads += list(msg[1])
         self.buffer = []
         return reads
