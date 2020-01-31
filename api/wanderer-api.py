@@ -14,6 +14,7 @@ relay_pins = {
     "DIP": 39
 }
 
+
 class Drive(Resource):
     def post(self, direction):
         if direction == "front":
@@ -31,32 +32,35 @@ class Drive(Resource):
             return {"success": False}
         return {"success": True}
 
+
 class Sonar(Resource):
     def get(self):
         i2c.send_write([0])
         print("Sonar Requested")
         return i2c.send_read(3)
 
+
 class Lights(Resource):
     @staticmethod
     def drl(state):
-        if state=="on":
+        if state == "on":
             i2c.send_write([2, relay_pins["DRL"], 0])
-        if state=="off":
+        if state == "off":
             i2c.send_write([2, relay_pins["DRL"], 1])
-    
+
     @staticmethod
     def dip(state):
-        if state=="on":
+        if state == "on":
             i2c.send_write([2, relay_pins["DIP"], 0])
-        if state=="off":
+        if state == "off":
             i2c.send_write([2, relay_pins["DIP"], 1])
-    
+
     def post(self, light, state):
-        if light=="drl":
+        if light == "drl":
             Lights.drl(state)
-        if light=="dip":
+        if light == "dip":
             Lights.dip(state)
+
 
 class Gear(Resource):
     def post(self, number):
@@ -68,8 +72,10 @@ class Gear(Resource):
             i2c.send_write([7, 191])
         elif number == '4':
             i2c.send_write([7, 255])
-        else: return {"success": False}
+        else:
+            return {"success": False}
         return {"success": True}
+
 
 api.add_resource(Drive, '/api/drive/<direction>')
 api.add_resource(Sonar, '/api/sonar/all')

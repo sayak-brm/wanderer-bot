@@ -2,8 +2,10 @@
 
 import smbus2
 
+
 class I2CError(OSError):
     pass
+
 
 class I2CIO:
     def __init__(self, addr, bus_no=1):
@@ -14,11 +16,11 @@ class I2CIO:
 
     def add_write(self, data):
         self.buffer.append(('w',
-            smbus2.i2c_msg.write(self.addr, data)))
+                            smbus2.i2c_msg.write(self.addr, data)))
 
     def add_read(self, len):
         self.buffer.append(('r',
-            smbus2.i2c_msg.read(self.addr, len)))
+                            smbus2.i2c_msg.read(self.addr, len)))
 
     def broadcast(self, attempt=1, max_attempts=3):
         try:
@@ -39,12 +41,12 @@ class I2CIO:
                 reads += list(msg[1])
         self.buffer = []
         return reads
-    
+
     def send_read(self, len):
         self.add_read(len)
         self.broadcast()
         return self.get_reads()
-    
+
     def send_write(self, data):
         self.add_write(data)
         self.broadcast()
