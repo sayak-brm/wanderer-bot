@@ -1,0 +1,3 @@
+[submodule "wanderer/libraries/NewPing"]
+	path = wanderer/libraries/NewPing
+	url = https://bitbucket.org/teckel12/arduino-new-ping.git

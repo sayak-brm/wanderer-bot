@@ -1,3 +1,3 @@
 # wanderer-bot
 
-![Python application](https://github.com/sayak-brm/wanderer-bot/workflows/Python%20application/badge.svg?branch=master)
+![Code Check](https://github.com/sayak-brm/wanderer-bot/workflows/Code%20Check/badge.svg?branch=master)

@@ -1,4 +1,4 @@
-name: Python API
+name: Code Check
 
 on: [push, pull_request]
 
@@ -8,11 +8,15 @@ jobs:
     runs-on: ubuntu-16.04
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Set up Python 3.7
       uses: actions/setup-python@v1
       with:
         python-version: 3.7
+    - name: Checkout submodules
+      run: |
+        git submodule sync --recursive
+        git -c protocol.version=2 submodule update --init --force --recursive --depth=1
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -24,6 +28,12 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Build all sketches
+      uses: Legion2/arduino-builder-action@v2.0.0
+      with:
+        board: "arduino:avr:mega:cpu=atmega2560"
+        sketchDirectory: "wanderer"
+        libraries: "wanderer/libraries"
 #    - name: Test with pytest
 #      run: |
 #        pip install pytest
