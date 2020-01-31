@@ -90,11 +90,11 @@ void STOP() {
 void receiveData(int n){
   Serial.print("Recv. bytes:");
   Serial.println(n);
-  
+
   byte command[n] = {0}; n=0;
   while(Wire.available())
     command[n++] = Wire.read();
-  
+
   switch(command[0]){
     case 0: //sonar req
       Serial.println("Recv. sonar request");
@@ -177,7 +177,7 @@ void receiveData(int n){
       Serial.println("Recv. drive");
       Serial.print("Command: ");
       Serial.println((int) command[1]);
-      
+
       switch(command[1]) {
         case 1: //front
           FRONT();
@@ -195,7 +195,7 @@ void receiveData(int n){
           STOP();
           break;
       }
-    
+
     case 7: //speed
       Serial.println("Recv. speed");
       Serial.print("Speed: ");
@@ -242,16 +242,16 @@ void setup() {
   Serial.begin(9600); // start serial for output
   // initialize i2c as slave
   Wire.begin(SLAVE_ADDRESS);
-  
+
   // define callbacks for i2c communication
   Wire.onReceive(receiveData);
   Wire.onRequest(sendData);
-  
+
   for(byte i=0; i<3; i++){
     pinMode(us_lows[i],  OUTPUT);
     pinMode(us_highs[i], OUTPUT);
   }
-  
+
   for(byte i=0; i<3; i++)
     digitalWrite(us_highs[i], HIGH);
 
