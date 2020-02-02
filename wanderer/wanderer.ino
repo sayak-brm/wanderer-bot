@@ -195,6 +195,7 @@ void receiveData(int n){
           STOP();
           break;
       }
+      break;
 
     case 7: //speed
       Serial.println("Recv. speed");
@@ -205,6 +206,7 @@ void receiveData(int n){
       analogWrite(ENBX, (int) command[1]);
       analogWrite(ENAY, (int) command[1]);
       analogWrite(ENBY, (int) command[1]);
+      break;
   }
 }
 
