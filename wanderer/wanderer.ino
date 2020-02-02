@@ -39,7 +39,7 @@ void FRONT() {
   digitalWrite(IN1Y, LOW);
   digitalWrite(IN2Y, HIGH);
   digitalWrite(IN3Y, HIGH);
-  digitalWrite(IN4X, LOW);
+  digitalWrite(IN4Y, LOW);
 }
 
 void BACK() {
@@ -50,7 +50,7 @@ void BACK() {
   digitalWrite(IN1Y, HIGH);
   digitalWrite(IN2Y, LOW);
   digitalWrite(IN3Y, LOW);
-  digitalWrite(IN4X, HIGH);
+  digitalWrite(IN4Y, HIGH);
 }
 
 void LEFT() {
@@ -61,7 +61,7 @@ void LEFT() {
   digitalWrite(IN1Y, HIGH);
   digitalWrite(IN2Y, LOW);
   digitalWrite(IN3Y, HIGH);
-  digitalWrite(IN4X, LOW);
+  digitalWrite(IN4Y, LOW);
 }
 
 void RIGHT() {
@@ -72,7 +72,7 @@ void RIGHT() {
   digitalWrite(IN1Y, LOW);
   digitalWrite(IN2Y, HIGH);
   digitalWrite(IN3Y, LOW);
-  digitalWrite(IN4X, HIGH);
+  digitalWrite(IN4Y, HIGH);
 }
 
 void STOP() {
@@ -83,7 +83,7 @@ void STOP() {
   digitalWrite(IN1Y, LOW);
   digitalWrite(IN2Y, LOW);
   digitalWrite(IN3Y, LOW);
-  digitalWrite(IN4X, LOW);
+  digitalWrite(IN4Y, LOW);
 }
 
 // callback for received data
