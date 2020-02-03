@@ -5,10 +5,10 @@ from flask_restful import Api
 from flask_restful import Resource
 from i2cio import I2CIO
 
-app = Flask(__name__)
-api = Api(app)
-i2c = I2CIO(0x01)
-app.config["DEBUG"] = True
+APP = Flask(__name__)
+API = Api(APP)
+I2C = I2CIO(0x01)
+APP.config["DEBUG"] = True
 
 opts = ''
 with open('params.json') as params:
@@ -18,7 +18,7 @@ class Drive(Resource):
     @staticmethod
     def post(direction):
         if direction in opts["dirs"]:
-            i2c.send_write([6,  opts["dirs"][direction]])
+            I2C.send_write([6,  opts["dirs"][direction]])
             return {"success": True}
         print("ERR: Incorrect Drive Direction")
         return {"success": False}
@@ -26,8 +26,8 @@ class Drive(Resource):
 class Sonar(Resource):
     @staticmethod
     def get():
-        i2c.send_write([0])
-        return i2c.send_read(3)
+        I2C.send_write([0])
+        return I2C.send_read(3)
 
 
 class Lights(Resource):
@@ -35,7 +35,7 @@ class Lights(Resource):
     def post(light, state):
         if light in opts["lights"]:
             if state in opts["relay_ao"]:
-                i2c.send_write([2, opts["lights"][light],
+                I2C.send_write([2, opts["lights"][light],
                     opts["relay_ao"][state]])
                 return {"success": True}
         return {"success": False}
@@ -44,14 +44,14 @@ class Gears(Resource):
     @staticmethod
     def post(number):
         if number in opts["gears"]:
-            i2c.send_write([7,  opts["gears"][number]])
+            I2C.send_write([7,  opts["gears"][number]])
             return {"success": True}
         return {"success": False}
 
-api.add_resource(Drive, '/api/drive/<direction>')
-api.add_resource(Sonar, '/api/sonar/all')
-api.add_resource(Lights, '/api/lights/<light>/<state>')
-api.add_resource(Gears, '/api/gear/<number>')
+API.add_resource(Drive, '/api/drive/<direction>')
+API.add_resource(Sonar, '/api/sonar/all')
+API.add_resource(Lights, '/api/lights/<light>/<state>')
+API.add_resource(Gears, '/api/gear/<number>')
 
 if __name__ == "__main__":
-    app.run(port="8500", host="0.0.0.0")
+    APP.run(port="8500", host="0.0.0.0")
