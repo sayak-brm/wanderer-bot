@@ -14,6 +14,7 @@ opts = ''
 with open('params.json') as params:
     opts = json.loads(params.read())
 
+
 class Drive(Resource):
     @staticmethod
     def post(direction):
@@ -22,6 +23,7 @@ class Drive(Resource):
             return {"success": True}
         print("ERR: Incorrect Drive Direction")
         return {"success": False}
+
 
 class Sonar(Resource):
     @staticmethod
@@ -36,9 +38,10 @@ class Lights(Resource):
         if light in opts["lights"]:
             if state in opts["relay_ao"]:
                 I2C.send_write([2, opts["lights"][light],
-                    opts["relay_ao"][state]])
+                                opts["relay_ao"][state]])
                 return {"success": True}
         return {"success": False}
+
 
 class Gears(Resource):
     @staticmethod
@@ -47,6 +50,7 @@ class Gears(Resource):
             I2C.send_write([7,  opts["gears"][number]])
             return {"success": True}
         return {"success": False}
+
 
 API.add_resource(Drive, '/api/drive/<direction>')
 API.add_resource(Sonar, '/api/sonar/all')
