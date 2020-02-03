@@ -38,7 +38,8 @@ class Lights(Resource):
     def post(light, state):
         if light in opts["lights"]:
             if state in opts["relay_ao"]:
-                I2C.send_write([2, opts["lights"][light], opts["relay_ao"][state]])
+                I2C.send_write(
+                    [2, opts["lights"][light], opts["relay_ao"][state]])
                 return {"success": True}
         return {"success": False}
 
