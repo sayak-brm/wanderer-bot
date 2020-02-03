@@ -11,10 +11,10 @@ PROGMEM const byte us_highs[3] = {4, 30, 50};
 PROGMEM const byte us_lows[3]  = {7, 24, 44};
 
 PROGMEM const int ENAX = 13;
-PROGMEM const int IN1X = 11;
-PROGMEM const int IN2X = 12;
-PROGMEM const int IN3X = 10;
-PROGMEM const int IN4X = 9;
+PROGMEM const int IN1X = 12;
+PROGMEM const int IN2X = 11;
+PROGMEM const int IN3X = 9;
+PROGMEM const int IN4X = 10;
 PROGMEM const int ENBX = 8;
 PROGMEM const int ENAY = 3;
 PROGMEM const int IN1Y = 14;
@@ -32,28 +32,28 @@ int  write_flag = -1;
 byte write_data = -1;
 
 void FRONT() {
-  digitalWrite(IN1X, LOW);
-  digitalWrite(IN2X, HIGH);
-  digitalWrite(IN3X, HIGH);
-  digitalWrite(IN4X, LOW);
+  digitalWrite(IN1X, HIGH);
+  digitalWrite(IN2X, LOW);
+  digitalWrite(IN3X, LOW);
+  digitalWrite(IN4X, HIGH);
   digitalWrite(IN1Y, LOW);
   digitalWrite(IN2Y, HIGH);
   digitalWrite(IN3Y, HIGH);
-  digitalWrite(IN4X, LOW);
+  digitalWrite(IN4Y, LOW);
 }
 
 void BACK() {
-  digitalWrite(IN1X, HIGH);
-  digitalWrite(IN2X, LOW);
-  digitalWrite(IN3X, LOW);
-  digitalWrite(IN4X, HIGH);
+  digitalWrite(IN1X, LOW);
+  digitalWrite(IN2X, HIGH);
+  digitalWrite(IN3X, HIGH);
+  digitalWrite(IN4X, LOW);
   digitalWrite(IN1Y, HIGH);
   digitalWrite(IN2Y, LOW);
   digitalWrite(IN3Y, LOW);
-  digitalWrite(IN4X, HIGH);
+  digitalWrite(IN4Y, HIGH);
 }
 
-void LEFT() {
+void RIGHT() {
   digitalWrite(IN1X, LOW);
   digitalWrite(IN2X, HIGH);
   digitalWrite(IN3X, LOW);
@@ -61,10 +61,10 @@ void LEFT() {
   digitalWrite(IN1Y, HIGH);
   digitalWrite(IN2Y, LOW);
   digitalWrite(IN3Y, HIGH);
-  digitalWrite(IN4X, LOW);
+  digitalWrite(IN4Y, LOW);
 }
 
-void RIGHT() {
+void LEFT() {
   digitalWrite(IN1X, HIGH);
   digitalWrite(IN2X, LOW);
   digitalWrite(IN3X, HIGH);
@@ -72,7 +72,7 @@ void RIGHT() {
   digitalWrite(IN1Y, LOW);
   digitalWrite(IN2Y, HIGH);
   digitalWrite(IN3Y, LOW);
-  digitalWrite(IN4X, HIGH);
+  digitalWrite(IN4Y, HIGH);
 }
 
 void STOP() {
@@ -83,7 +83,7 @@ void STOP() {
   digitalWrite(IN1Y, LOW);
   digitalWrite(IN2Y, LOW);
   digitalWrite(IN3Y, LOW);
-  digitalWrite(IN4X, LOW);
+  digitalWrite(IN4Y, LOW);
 }
 
 // callback for received data
