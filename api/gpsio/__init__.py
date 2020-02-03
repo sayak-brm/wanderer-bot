@@ -41,24 +41,20 @@ class GPSIO:
         return self.packet.map_url()
 
     def get_json(self):
-        jsonstring = {"Mode": self.packet.mode,
-                      "Sats": self.packet.sats
-                      }
-        if (self.packet.mode >= 2):
-            jsonstring.update(Mode=self.packet.mode,
-                              Sats=self.packet.sats,
-                              Lat=self.packet.lat,
-                              Lon=self.packet.lon,
-                              Track=self.packet.track,
-                              Hspeed=self.packet.hspeed,
-                              Time=self.packet.time,
-                              Error=self.packet.error,
-                              Position_Precision=self.packet.position_precision(),
-                              Map_Url=self.packet.map_url()
-                              )
-        if(self.packet.mode >= 3):
+        jsonstring = {"Mode": self.packet.mode, "Sats": self.packet.sats}
+        if self.packet.mode >= 2:
             jsonstring.update(
-                Climb=self.packet.climb,
-                Alt=self.packet.alt
+                Mode=self.packet.mode,
+                Sats=self.packet.sats,
+                Lat=self.packet.lat,
+                Lon=self.packet.lon,
+                Track=self.packet.track,
+                Hspeed=self.packet.hspeed,
+                Time=self.packet.time,
+                Error=self.packet.error,
+                Position_Precision=self.packet.position_precision(),
+                Map_Url=self.packet.map_url(),
             )
+        if self.packet.mode >= 3:
+            jsonstring.update(Climb=self.packet.climb, Alt=self.packet.alt)
         return json.dumps(jsonstring)
