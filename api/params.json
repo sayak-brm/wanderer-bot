@@ -1,14 +1,23 @@
 {
-    "dirs": {
-        "front": 1, "back": 2, "left": 3, "right": 4, "stop": 5
-    },
-    "relay_ao": {
-        "on": 0, "off": 1
-    },
-    "lights": {
-        "drl": 37, "dip": 39
-    },
-    "gears": {
-        "1": 63, "2": 127, "3": 191, "4": 255
-    }
+  "dirs": {
+    "front": 1,
+    "back": 2,
+    "left": 3,
+    "right": 4,
+    "stop": 5
+  },
+  "relay_ao": {
+    "on": 0,
+    "off": 1
+  },
+  "lights": {
+    "drl": 37,
+    "dip": 39
+  },
+  "gears": {
+    "1": 63,
+    "2": 127,
+    "3": 191,
+    "4": 255
+  }
 }
