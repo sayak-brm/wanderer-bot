@@ -1,5 +1,6 @@
-import gpsd
 import json
+
+import gpsd
 
 
 class GPSIO:
