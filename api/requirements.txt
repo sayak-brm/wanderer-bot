@@ -1,3 +1,4 @@
 flask
 flask_restful
 smbus2
+gpsd-py3
