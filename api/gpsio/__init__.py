@@ -4,10 +4,12 @@ import gpsd
 
 
 class GPSIO:
-    def __init__(self):
+    @staticmethod
+    def __init__():
         gpsd.connect()
 
-    def get_data(self):
+    @staticmethod
+    def get_data():
         packet = gpsd.get_current()
         data = {"Mode": packet.mode, "Sats": packet.sats}
         if packet.mode >= 2:
