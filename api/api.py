@@ -5,10 +5,12 @@ from flask import Flask
 from flask_restful import Api
 from flask_restful import Resource
 from i2cio import I2CIO
+from gpsio import GPSIO
 
 APP = Flask(__name__)
 API = Api(APP)
 I2C = I2CIO(0x01)
+GPS = GPSIO()
 APP.config["DEBUG"] = True
 
 opts = ""
@@ -30,7 +32,7 @@ class Sonar(Resource):
     @staticmethod
     def get():
         I2C.send_write([0])
-        return I2C.send_read(3)
+        return {"success": True, "sonar": I2C.send_read(3)}
 
 
 class Lights(Resource):
@@ -52,11 +54,19 @@ class Gears(Resource):
             return {"success": True}
         return {"success": False}
 
+class Navigation(Resource):
+    @staticmethod
+    def get(device):
+        if device == "gps":
+            return {"success": True, "gps": GPS.get_data()}
+        return {"success": False}
+
 
 API.add_resource(Drive, "/api/drive/<direction>")
 API.add_resource(Sonar, "/api/sonar/all")
 API.add_resource(Lights, "/api/lights/<light>/<state>")
 API.add_resource(Gears, "/api/gear/<number>")
+API.add_resource(Gears, "/api/navigation/<device>")
 
 if __name__ == "__main__":
     APP.run(port="8500", host="0.0.0.0")
