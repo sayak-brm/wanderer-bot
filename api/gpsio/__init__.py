@@ -4,8 +4,7 @@ import gpsd
 
 
 class GPSIO:
-    @staticmethod
-    def __init__():
+    def __init__(self):
         gpsd.connect()
 
     @staticmethod
