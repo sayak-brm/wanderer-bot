@@ -54,6 +54,7 @@ class Gears(Resource):
             return {"success": True}
         return {"success": False}
 
+
 class Navigation(Resource):
     @staticmethod
     def get(device):
