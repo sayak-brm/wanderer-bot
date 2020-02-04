@@ -4,8 +4,8 @@ import json
 from flask import Flask
 from flask_restful import Api
 from flask_restful import Resource
-from i2cio import I2CIO
 from gpsio import GPSIO
+from i2cio import I2CIO
 
 APP = Flask(__name__)
 API = Api(APP)
