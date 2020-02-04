@@ -13,16 +13,16 @@ I2C = I2CIO(0x01)
 GPS = GPSIO()
 APP.config["DEBUG"] = True
 
-opts = ""
+OPTS = ""
 with open("params.json") as params:
-    opts = json.loads(params.read())
+    OPTS = json.loads(params.read())
 
 
 class Drive(Resource):
     @staticmethod
     def post(direction):
-        if direction in opts["dirs"]:
-            I2C.send_write([6, opts["dirs"][direction]])
+        if direction in OPTS["dirs"]:
+            I2C.send_write([6, OPTS["dirs"][direction]])
             return {"success": True}
         print("ERR: Incorrect Drive Direction")
         return {"success": False}
@@ -38,10 +38,10 @@ class Sonar(Resource):
 class Lights(Resource):
     @staticmethod
     def post(light, state):
-        if light in opts["lights"]:
-            if state in opts["relay_ao"]:
+        if light in OPTS["lights"]:
+            if state in OPTS["relay_ao"]:
                 I2C.send_write(
-                    [2, opts["lights"][light], opts["relay_ao"][state]])
+                    [2, OPTS["lights"][light], OPTS["relay_ao"][state]])
                 return {"success": True}
         return {"success": False}
 
@@ -49,8 +49,8 @@ class Lights(Resource):
 class Gears(Resource):
     @staticmethod
     def post(number):
-        if number in opts["gears"]:
-            I2C.send_write([7, opts["gears"][number]])
+        if number in OPTS["gears"]:
+            I2C.send_write([7, OPTS["gears"][number]])
             return {"success": True}
         return {"success": False}
 
