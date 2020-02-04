@@ -28,8 +28,7 @@ class I2CIO:
             self.bus = smbus2.SMBus(self.bus_no)
             if attempt >= max_attempts:
                 raise I2CError
-            else:
-                self.broadcast(attempt + 1, max_attempts)
+            self.broadcast(attempt + 1, max_attempts)
 
     def get_reads(self):
         reads = []
