@@ -67,7 +67,7 @@ API.add_resource(Drive, "/api/drive/<direction>")
 API.add_resource(Sonar, "/api/sonar/all")
 API.add_resource(Lights, "/api/lights/<light>/<state>")
 API.add_resource(Gears, "/api/gear/<number>")
-API.add_resource(Gears, "/api/navigation/<device>")
+API.add_resource(Navigation, "/api/navigation/<device>")
 
 if __name__ == "__main__":
     APP.run(port="8500", host="0.0.0.0")
