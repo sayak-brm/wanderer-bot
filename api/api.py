@@ -1,13 +1,13 @@
 #! /usr/bin/python3
 import json
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful import Api
 from flask_restful import Resource
 from gpsio import GPSIO
 from i2cio import I2CIO
 
-APP = Flask(__name__)
+APP = Flask(__name__, template_folder='templates')
 API = Api(APP)
 I2C = I2CIO(0x01)
 GPS = GPSIO()
@@ -16,6 +16,10 @@ APP.config["DEBUG"] = True
 OPTS = ""
 with open("params.json") as params:
     OPTS = json.loads(params.read())
+
+@APP.route('/')
+def root():
+    return render_template("index.html")
 
 
 class Drive(Resource):

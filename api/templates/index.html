@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+  
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+  
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+input:checked + .slider {
+    background-color: #2196F3;
+}
+  
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+  
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+  
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+  
+.slider.round:before {
+    border-radius: 50%;
+}
+
+html, body {
+    width:100%;
+    height:100%;
+    overflow: hidden;
+}
+
+#manual_container {
+    width:40%;
+    float: left;
+    text-align: center;
+    transform: translate3d(0, 0, 0);
+}
+
+#direction {
+    margin-bottom: 20px;
+}
+
+#lights {
+    margin-bottom: 20px;
+}
+
+#gears {
+    margin-bottom: 20px;
+}
+
+.arrow-key {
+    align-items: center;
+    background: #ccc;
+    border-radius: 6px;
+    box-shadow: -1px 1px 0 #999, -2px 2px 0 #999, -3px 3px 0 #999, -4px 4px 0 #999;
+    color: #fff;
+    display: inline-flex;
+    font-size: 30px;
+    font-weight: bold;
+    height: 75px;
+    justify-content: center;
+    margin: 5px;
+    transform: translate3d(0, 0, 0);
+    transition: box-shadow 0s linear, transform 0s linear;
+    width: 75px;
+}
+.arrow-key:active, .arrow-key.press {
+    box-shadow: 0px 0px 0 #999, 0px 0px 0 #999, 0px 0px 0 #999, -1px 1px 0 #999;
+    transform: translate3d(-3px, 3px, 0);
+}
+.arrow-key.left:before {
+    content: "\2190";
+}
+.arrow-key.up:before {
+    content: "\2191";
+}
+.arrow-key.down:before {
+    content: "\2193";
+}
+.arrow-key.right:before {
+    content: "\2192";
+}
+  
+.sonar_label {
+    border: 1px solid black;
+}
+
+#stop {
+    font-size: 20px;
+    background-color: rgb(255, 138, 83);
+}
+
+
+@media only screen and (max-width: 800px) {
+    #manual_container {
+        width:100%;
+    }
+}
+    </style>
+    
+    <title>Wanderer-Bot</title>
+</head>
+<body>
+    <div id="manual_container">
+        <div id="direction">
+            <div class="arrow-key up" ontouchstart="postDoc('/api/drive/front');" ontouchend="postDoc('/api/drive/stop');"></div><br>
+            <div class="arrow-key left" ontouchstart="postDoc('/api/drive/left');" ontouchend="postDoc('/api/drive/stop');"></div>
+            <div class="arrow-key stop" id="stop" onclick="postDoc('/api/drive/stop');">STOP</div>
+            <div class="arrow-key right" ontouchstart="postDoc('/api/drive/right');" ontouchend="postDoc('/api/drive/stop');"></div><br>
+            <div class="arrow-key down" ontouchstart="postDoc('/api/drive/back');" ontouchend="postDoc('/api/drive/stop');"></div>
+        </div>
+        <div id="lights">
+            <label class="switch">
+                <input type="checkbox" id="drl" onclick="drl()">
+                <span class="slider round"></span><br><br>DRL
+            </label>
+            <label class="switch">
+                <input type="checkbox" id="dip" onclick="dip()">
+                <span class="slider round"></span><br><br>DIP
+            </label>
+        </div>
+        <div id="gears">
+            <input class="gear_button" id="gear1" type="button" value="gear1"  onclick="postDoc('/api/gear/1');">
+            <input class="gear_button" id="gear2" type="button" value="gear2"  onclick="postDoc('/api/gear/2');">
+            <input class="gear_button" id="gear3" type="button" value="gear3"  onclick="postDoc('/api/gear/3');">
+            <input class="gear_button" id="gear4" type="button" value="gear4"  onclick="postDoc('/api/gear/4');">
+        </div>
+        <div id="sonar">
+            <label class="sonar_label" id="sonar1">SSS</label>
+            <label class="sonar_label" id="sonar2">SSS</label>
+            <label class="sonar_label" id="sonar3">SSS</label>
+        </div>
+    </div>
+
+    <iframe id="gps"></iframe>
+
+    <script>
+        function postDoc(url) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && ( this.status == 200 || this.status == 202 )) {
+            if(JSON.parse(this.responseText).success == false) {
+                alert("SERVER NOT CONNECTED");
+                return;
+            }
+        }
+    };
+    xhttp.open("POST", url, true);
+    xhttp.send();
+}
+
+function drl() {
+    if(document.getElementById("drl").checked)
+        postDoc('/api/lights/drl/on')
+    else
+        postDoc('/api/lights/drl/off')
+}
+
+function dip() {
+    if(document.getElementById("dip").checked)
+        postDoc('/api/lights/dip/on')
+    else
+        postDoc('/api/lights/dip/off')
+}
+    </script>
+</body>
+</html>
